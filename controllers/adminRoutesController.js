@@ -57,4 +57,15 @@ const login = asyncHandler(async (req, res) => {
   res.json({ message: "user login" });
 });
 
-module.exports = { register, login };
+
+const getAllAdmins = asyncHandler(async(req,res) => {
+  const allAdmins = await admin_data.find();
+  if(!allAdmins){
+    res.status(400);
+    throw new Error("No admin available! ");
+  }
+  res.status(200).json(allAdmins);
+})
+
+
+module.exports = { register, login, getAllAdmins};

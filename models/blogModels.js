@@ -27,7 +27,11 @@ const blogSchema = mongoose.Schema({
   },
   activeFrom :{
     type: Date, 
-    required: [true, "Please active from date" ]
+    required: [true, "Please add activeFrom date" ]
+  },
+  blogStatus :{
+    type: String, 
+    required: [true, "Please blog status" ]
   },
 },
 {
