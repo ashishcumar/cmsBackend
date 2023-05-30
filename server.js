@@ -7,17 +7,10 @@ const filterRoutes = require("./routes/filterRoutes");
 const bodyParser = require("body-parser");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./dbConfig/mongoDbConnection");
+var cors = require("cors");
 
 connectDb();
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
-
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(errorHandler);
