@@ -14,7 +14,7 @@ const register = asyncHandler(async (req, res) => {
   const adminAvailable = await admin_data.findOne({ email });
   if (adminAvailable) {
     res.status(400).json({
-      message: "admin-id already available",
+      message: "admin-id already taken",
     });
     throw new Error("admin-id already available");
   }

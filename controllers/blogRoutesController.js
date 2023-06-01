@@ -28,7 +28,8 @@ const createNewBlog = asyncHandler(async (req, res) => {
     html,
     slug,
     tags,
-    activeFrom
+    activeFrom,
+    blogStatus
   });
   res.status(201).json(newBlog);
 });
