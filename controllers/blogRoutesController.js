@@ -9,18 +9,19 @@ const getBlogs = asyncHandler(async (req, res) => {
 const getSingleBlog = asyncHandler(async (req, res) => {
   const blog = await blog_data.find({ slug: req.params.slug });
   if (!blog) {
-    res.status(404);
+    res.status(404).json({message:"blog not found"});
     throw new Error("blog not found");
   }
   res.status(200).json(blog);
 });
 
 const createNewBlog = asyncHandler(async (req, res) => {
-  const {title, slug, html, feature_image, authors, tags, activeFrom} = req.body;
-  if (!title || !slug || !html || !feature_image || !authors || !tags) {
-    res.status(400);
+  const {title, slug, html, feature_image, authors, tags, activeFrom, blogStatus, short_Desp } = req.body;
+  if (!title || !slug || !html || !feature_image || !authors || !tags || !blogStatus || !short_Desp) {
+    res.status(400).json({message:"All fields are mandatory !"});
     throw new Error("All fields are mandatory !");
   }
+  console.log(blogStatus)
   const newBlog = blog_data.create({
     title,
     authors,
@@ -29,15 +30,16 @@ const createNewBlog = asyncHandler(async (req, res) => {
     slug,
     tags,
     activeFrom,
-    blogStatus
+    blogStatus,
+    short_Desp,
   });
-  res.status(201).json(newBlog);
+  res.status(201).json({ data:newBlog,message:"blog added"});
 });
 
 const updateBlog = asyncHandler(async (req, res) => {
   const blog = await blog_data.find({ slug: req.params.slug });
   if (!blog) {
-    res.status(404);
+    res.status(404).json({message:"blog not found"});
     throw new Error("blog not found");
   }
   const updateBlogContent = await blog_data.findOneAndUpdate(
@@ -45,13 +47,13 @@ const updateBlog = asyncHandler(async (req, res) => {
     req.body,
     { new: true }
   );
-  res.status(200).json(updateBlogContent);
+  res.status(200).json({data:updateBlogContent,message:"blog updated"});
 });
 
 const deleteBlog = asyncHandler(async (req, res) => {
   const blog = await blog_data.find({ slug: req.params.slug });
   if (!blog) {
-    res.status(404);
+    res.status(404).json({message:"blog not found"});
     throw new Error("blog not found");
   }
   await blog_data.findOneAndRemove({ slug: req.params.slug });

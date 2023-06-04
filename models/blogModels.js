@@ -13,6 +13,10 @@ const blogSchema = mongoose.Schema({
     type: String, 
     required: [true, "Please add blog content" ]
   },
+  short_Desp :{
+    type: String, 
+    required: [true, "Please add short Desp content" ]
+  },
   feature_image :{
     type: String, 
     required:[true, "Please add Feautre image" ]

@@ -27,7 +27,9 @@ const register = asyncHandler(async (req, res) => {
   if (newAdmin) {
     res.status(201).json(newAdmin);
   } else {
-    res.status(400);
+    res.status(400).json({
+      message:"Admin data is not valid"
+    });
     throw new Error("Admin data is not valid");
   }
 });
@@ -35,7 +37,7 @@ const register = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res.status(400);
+    res.status(400).json({message:"All fields are mandatory! "});
     throw new Error("All fields are mandatory! ");
   }
   const adminAvailable = await admin_data.findOne({ email });
@@ -64,7 +66,7 @@ const login = asyncHandler(async (req, res) => {
 const getAllAdmins = asyncHandler(async (req, res) => {
   const allAdmins = await admin_data.find();
   if (!allAdmins) {
-    res.status(400);
+    res.status(400).json({message:"No admin available! "});
     throw new Error("No admin available! ");
   }
   res.status(200).json(allAdmins);
